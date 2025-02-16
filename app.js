@@ -2415,14 +2415,17 @@ app.get("/filter", (req, res) => {
 // Route to retrieve a specific secret by key
 app.get("/activity/:key", (req, res) => {
   const key = req.params.key;
+  let activityFound = false;
   data.activities.forEach((activity) => {
     if (activity.key == key) {
       console.log(true);
       res.json(activity);
+      activityFound = true;
     }
   });
-
-  res.status(404).json({ error: "Activity not found" });
+  if (!activityFound) {
+    res.status(404).json({ error: "Activity not found" });
+  }
 });
 
 const port = 4000;
